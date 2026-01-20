@@ -171,8 +171,8 @@ class MouthScanDataset(torch.utils.data.Dataset):
 
         if self.input_type == "full_pcd":
             coords, feats = self._load_full_pcd(episode_path, base_name)
-            ret_dict["input_coords_list"] = [coords]
-            ret_dict["input_feats_list"] = [feats]
+            ret_dict["input_coords_list"] = coords
+            ret_dict["input_feats_list"] = feats
         else:
             ret_dict["input_rgb"] = self._load_mouth_rgb(episode_path, obs_record)
 
