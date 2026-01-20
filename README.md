@@ -6,6 +6,24 @@
 
 ![teaser](assets/images/teaser.jpg)
 
+## MouthScan Variant: Full PCD -> TCP
+
+This branch adapts RISE to predict the next oral scan TCP pose from cumulative point clouds.
+
+- Input: `pcd/full_pcd_data_*.ply` (cumulative scans) from `/scratch/refracta1342/datasets/episode_e2_f1__siwon2_augmented01-10`
+- Output: next-step `tcp_position_base` + `tcp_orientation_base_wxyz` (action_dim=7, horizon=1)
+- Dataset: `dataset/mouthscan.py` builds Minkowski sparse tensors from full PCD
+- Model: Sparse3DEncoder + Transformer + DiffusionUNet (RISE backbone)
+- Train entrypoint: `train_mouthscan.py` with `INPUT_TYPE=full_pcd`, `TARGET_TYPE=tcp`
+
+Example training command:
+
+```bash
+torchrun --nproc_per_node 1 --nnodes 1 --node_rank 0 train_mouthscan.py \
+  --data_root /scratch/refracta1342/datasets \
+  --ckpt_dir logs/mouthscan_fullpcd_tcp
+```
+
 ## 🔥 News
 
 - **[Nov 24, 2025]** Support CUDA 12.8 for MinkowskiEngine installation. You'll need to clone or update the modified [MinkowskiEngine](https://github.com/chenxi-wang/MinkowskiEngine/tree/cuda-12-1) library. See the [installation guide](assets/docs/INSTALL.md) for details.
