@@ -6,22 +6,22 @@
 
 ![teaser](assets/images/teaser.jpg)
 
-## MouthScan Variant: Full PCD -> TCP
+## MouthScan Variant: Full PCD -> Joint
 
-This branch adapts RISE to predict the next oral scan TCP pose from cumulative point clouds.
+This branch adapts RISE to predict the next joint configuration from cumulative point clouds.
 
 - Input: `pcd/full_pcd_data_*.ply` (cumulative scans) from `/scratch/refracta1342/datasets/episode_e2_f1__siwon2_augmented01-10`
-- Output: next-step `tcp_position_base` + `tcp_orientation_base_wxyz` (action_dim=7, horizon=1)
+- Output: next-step `joint_positions` (action_dim=6, horizon=1)
 - Dataset: `dataset/mouthscan.py` builds Minkowski sparse tensors from full PCD
 - Model: Sparse3DEncoder + Transformer + DiffusionUNet (RISE backbone)
-- Train entrypoint: `train_mouthscan.py` with `INPUT_TYPE=full_pcd`, `TARGET_TYPE=tcp`
+- Train entrypoint: `train_mouthscan.py` with `INPUT_TYPE=full_pcd`, `TARGET_TYPE=joint`
 
 Example training command:
 
 ```bash
 torchrun --nproc_per_node 1 --nnodes 1 --node_rank 0 train_mouthscan.py \
   --data_root /scratch/refracta1342/datasets \
-  --ckpt_dir logs/mouthscan_fullpcd_tcp
+  --ckpt_dir logs/mouthscan_fullpcd_joint
 ```
 
 ## 🔥 News

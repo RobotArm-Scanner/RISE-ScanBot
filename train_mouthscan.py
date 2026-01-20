@@ -14,7 +14,7 @@ from utils.training import set_seed, plot_history, sync_loss
 
 
 INPUT_TYPE = "full_pcd"
-TARGET_TYPE = "tcp"
+TARGET_TYPE = "joint"
 
 
 default_args = edict({
@@ -44,7 +44,7 @@ default_args = edict({
     "num_decoder_layers": 1,
     "dim_feedforward": 2048,
     "dropout": 0.1,
-    "ckpt_dir": "logs/mouthscan_fullpcd_tcp",
+    "ckpt_dir": "logs/mouthscan_fullpcd_joint",
     "resume_ckpt": None,
     "resume_epoch": -1,
     "lr": 3e-4,
