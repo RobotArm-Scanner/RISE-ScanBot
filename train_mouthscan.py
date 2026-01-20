@@ -13,7 +13,7 @@ from dataset.mouthscan import MouthScanDataset, collate_pcd
 from utils.training import set_seed, plot_history, sync_loss
 
 
-INPUT_TYPE = "full_pcd"
+INPUT_TYPE = "mouth_rgb"
 TARGET_TYPE = "tcp"
 
 
@@ -44,7 +44,7 @@ default_args = edict({
     "num_decoder_layers": 1,
     "dim_feedforward": 2048,
     "dropout": 0.1,
-    "ckpt_dir": "logs/mouthscan_fullpcd_tcp",
+    "ckpt_dir": "logs/mouthscan_rgb_tcp",
     "resume_ckpt": None,
     "resume_epoch": -1,
     "lr": 3e-4,

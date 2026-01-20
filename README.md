@@ -6,22 +6,22 @@
 
 ![teaser](assets/images/teaser.jpg)
 
-## MouthScan Variant: Full PCD -> TCP
+## MouthScan Variant: Mouth RGB -> TCP
 
-This branch adapts RISE to predict the next oral scan TCP pose from cumulative point clouds.
+This branch adapts RISE to predict the next oral scan TCP pose from mouth RGB images.
 
-- Input: `pcd/full_pcd_data_*.ply` (cumulative scans) from `/scratch/refracta1342/datasets/episode_e2_f1__siwon2_augmented01-10`
+- Input: `mouth_rgb_*.png` from `/scratch/refracta1342/datasets/episode_e2_f1__siwon2_augmented01-10`
 - Output: next-step `tcp_position_base` + `tcp_orientation_base_wxyz` (action_dim=7, horizon=1)
-- Dataset: `dataset/mouthscan.py` builds Minkowski sparse tensors from full PCD
-- Model: Sparse3DEncoder + Transformer + DiffusionUNet (RISE backbone)
-- Train entrypoint: `train_mouthscan.py` with `INPUT_TYPE=full_pcd`, `TARGET_TYPE=tcp`
+- Dataset: `dataset/mouthscan.py` loads and normalizes mouth RGB frames
+- Model: ResNet18 encoder + DiffusionUNet (RGBPolicy)
+- Train entrypoint: `train_mouthscan.py` with `INPUT_TYPE=mouth_rgb`, `TARGET_TYPE=tcp`
 
 Example training command:
 
 ```bash
 torchrun --nproc_per_node 1 --nnodes 1 --node_rank 0 train_mouthscan.py \
   --data_root /scratch/refracta1342/datasets \
-  --ckpt_dir logs/mouthscan_fullpcd_tcp
+  --ckpt_dir logs/mouthscan_rgb_tcp
 ```
 
 ## 🔥 News
